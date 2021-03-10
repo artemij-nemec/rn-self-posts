@@ -1,4 +1,5 @@
-## React Native app from Udemy course
+## Posts app
+The application built with React Native is a test project to demonstrate how a post can be created and displayed in a personal blog. For now, the current implementation works for android and ios.
 
 ## Getting Started
 
