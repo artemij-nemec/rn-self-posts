@@ -1,6 +1,8 @@
 import React from 'react'
 import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import AppHeaderIcon from '../components/AppHeaderIcon'
 import { DATA } from '../data'
 import { THEME } from '../theme'
 
@@ -18,7 +20,7 @@ export const PostScreen = ({ navigation }) => {
         },
         {
           text: 'Delete',
-          onPress: () => {},
+          onPress: () => { },
           style: 'negative'
         }
       ],
@@ -41,12 +43,26 @@ export const PostScreen = ({ navigation }) => {
   )
 }
 
-PostScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: 'Post from ' + new Date(navigation.getParam('date')).toLocaleDateString(),
-  headerStyle: {
-    backgroundColor: THEME.MAIN_COLOR
+PostScreen.navigationOptions = ({ navigation }) => {
+  const date = navigation.getParam('date')
+  const booked = navigation.getParam('booked')
+  const iconName = booked ? 'ios-star' : 'ios-star-outline'
+  return {
+    headerTitle: 'Post from ' + new Date(date).toLocaleDateString(),
+    headerStyle: {
+      backgroundColor: THEME.MAIN_COLOR
+    },
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+        <Item
+          title='Favorite'
+          iconName={iconName}
+          onPress={() => console.log('Favorite')}
+        />
+      </HeaderButtons>
+    )
   }
-})
+}
 
 const styles = StyleSheet.create({
   image: {
