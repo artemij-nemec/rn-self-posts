@@ -1,13 +1,18 @@
 import React from 'react'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import {
+  HeaderButtons,
+  Item
+} from 'react-navigation-header-buttons'
+import { useSelector } from 'react-redux'
 import AppHeaderIcon from '../components/AppHeaderIcon'
 import { PostList } from '../components/PostList'
-import { DATA } from '../data.js'
 
-
-export const BookedScreen = (props) => {
+export const BookedScreen = ({ navigation }) => {
+  const bookedPosts = useSelector(
+    state => state.post.bookedPosts
+  )
   const openPostHandler = post => {
-    props.navigation.navigate('Post', {
+    navigation.navigate('Post', {
       postId: post.id,
       date: post.date,
       booked: post.booked
@@ -15,7 +20,7 @@ export const BookedScreen = (props) => {
   }
 
   return (
-    <PostList data={DATA.filter(p => p.booked)} onOpen={openPostHandler} />
+    <PostList data={bookedPosts} onOpen={openPostHandler} />
   )
 }
 
@@ -24,8 +29,8 @@ BookedScreen.navigationOptions = ({ navigation }) => ({
   headerRight: () => (
     <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
       <Item
-        title="Take photo"
-        iconName="ios-camera"
+        title='Take photo'
+        iconName='ios-camera'
         onPress={() => navigation.push('Create')}
       />
     </HeaderButtons>
@@ -33,11 +38,10 @@ BookedScreen.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
       <Item
-        title="Toggle Drawer"
-        iconName="ios-menu"
+        title='Toggle Drawer'
+        iconName='ios-menu'
         onPress={navigation.toggleDrawer}
       />
     </HeaderButtons>
   )
 })
-

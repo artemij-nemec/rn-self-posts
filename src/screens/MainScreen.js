@@ -1,12 +1,16 @@
-import React from 'react'
-import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import React, { useEffect } from 'react'
+import {
+  HeaderButtons,
+  Item
+} from 'react-navigation-header-buttons'
+import { useDispatch, useSelector } from 'react-redux'
 import AppHeaderIcon from '../components/AppHeaderIcon'
 import { PostList } from '../components/PostList'
-import { DATA } from '../data.js'
+import { loadPosts } from '../store/actions/post'
 
-
-
-export const MainScreen = (props) => {
+export const MainScreen = props => {
+  const dispatch = useDispatch()
+  const allPosts = useSelector(state => state.post.allPosts)
   const openPostHandler = post => {
     props.navigation.navigate('Post', {
       postId: post.id,
@@ -15,8 +19,12 @@ export const MainScreen = (props) => {
     })
   }
 
+  useEffect(() => {
+    dispatch(loadPosts())
+  }, [dispatch])
+
   return (
-    <PostList data={DATA} onOpen={openPostHandler} />
+    <PostList data={allPosts} onOpen={openPostHandler} />
   )
 }
 
@@ -25,8 +33,8 @@ MainScreen.navigationOptions = ({ navigation }) => ({
   headerRight: () => (
     <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
       <Item
-        title="Take photo"
-        iconName="ios-camera"
+        title='Take photo'
+        iconName='ios-camera'
         onPress={() => navigation.push('Create')}
       />
     </HeaderButtons>
@@ -34,8 +42,8 @@ MainScreen.navigationOptions = ({ navigation }) => ({
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
       <Item
-        title="Toggle Drawer"
-        iconName="ios-menu"
+        title='Toggle Drawer'
+        iconName='ios-menu'
         onPress={navigation.toggleDrawer}
       />
     </HeaderButtons>
