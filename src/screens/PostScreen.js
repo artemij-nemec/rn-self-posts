@@ -17,13 +17,13 @@ export const PostScreen = ({ navigation }) => {
     state.post.bookedPosts.some(p => p.id === postId)
   )
 
-  const toggleHandler = useCallback(() => {
-    dispatch(toggleBooked(postId))
-  }, [dispatch, postId])
-
   useEffect(() => {
     navigation.setParams({ booked })
   }, [booked])
+
+  const toggleHandler = useCallback(() => {
+    dispatch(toggleBooked(post))
+  }, [dispatch, post])
 
   useEffect(() => {
     navigation.setParams({ toggleHandler })
@@ -42,6 +42,7 @@ export const PostScreen = ({ navigation }) => {
           text: 'Delete',
           onPress: () => {
             dispatch(removePost(postId))
+            navigation.navigate('Main')
           },
           style: 'negative'
         }
@@ -51,7 +52,6 @@ export const PostScreen = ({ navigation }) => {
   }
 
   if (!post) {
-    navigation.navigate('Main')
     return null
   }
 

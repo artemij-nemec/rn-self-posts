@@ -4,7 +4,11 @@ import { Provider } from 'react-redux'
 import { bootstrap } from './src/bootstrap'
 import { AppNavigation } from './src/navigation/AppNavigation'
 import store from './src/store'
-console.disableYellowBox = true
+
+import { LogBox } from 'react-native'
+LogBox.ignoreLogs([
+  'Your project is accessing the following APIs from a deprecated global rather than a module import'
+])
 
 export default function App() {
   const [isReady, setIsReady] = useState(false)
